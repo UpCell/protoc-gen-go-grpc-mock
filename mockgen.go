@@ -186,6 +186,7 @@ func (g *generator) GenerateMockInterface(intf *model.Interface, outputPackagePa
 	g.p("// %v is a mock of %v interface.", mockType, intf.Name)
 	g.p("type %v struct {", mockType)
 	g.in()
+	g.p(fmt.Sprintf("Unimplemented%s", intf.Name))
 	g.p("ctrl     *gomock.Controller")
 	g.p("recorder *%vMockRecorder", mockType)
 	g.out()
