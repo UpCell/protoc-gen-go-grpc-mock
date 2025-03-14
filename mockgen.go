@@ -181,12 +181,15 @@ func (g *generator) mockName(typeName string) string {
 
 func (g *generator) GenerateMockInterface(intf *model.Interface, outputPackagePath string) error {
 	mockType := g.mockName(intf.Name)
+	isService := strings.HasSuffix(intf.Name, "Server")
 
 	g.p("")
 	g.p("// %v is a mock of %v interface.", mockType, intf.Name)
 	g.p("type %v struct {", mockType)
 	g.in()
-	g.p(fmt.Sprintf("Unimplemented%s", intf.Name))
+	if isService {
+		g.p("Unimplemented%v", intf.Name)
+	}
 	g.p("ctrl     *gomock.Controller")
 	g.p("recorder *%vMockRecorder", mockType)
 	g.out()
